@@ -9,11 +9,11 @@
       <div class="logo"></div>
       <h1>网贷口子专业技术社区</h1>
       <div class="phone-num">
-        <input type=tel placeholder="手机号" v-model="userPhoneNumber" name="" id="">
+        <input type=tel placeholder="账户名" v-model="userInfo.userPhoneNumber" name="" id="">
       </div>
       <div class="password">
-        <input type="tel" placeholder="验证码" v-model="userPassword" name="" id="">
-        <span @click="sendPassword()">发送验证码</span>
+        <input type="password" placeholder="密码" v-model="userPassword" name="" id="">
+        <!-- <span @click="sendPassword()">发送验证码</span> -->
       </div>
       <div class="login-btn" @click="userLogin()">登录</div>
       <p>点击登录即表示同意
@@ -23,15 +23,17 @@
   </div>
 </template>
 <script>
-import { sendPasswordApi, userLoginApi, getUserDateApi } from '../http/api';
-import JSEncrypt from 'jsencrypt';
+// import { sendPasswordApi, userLoginApi, getUserDateApi } from '../http/api';
+// import JSEncrypt from 'jsencrypt';
 export default {
   data() {
     return {
-      userPhoneNumber: null,
       userPassword: null,
-      userInfo: {},
-      encrypted: ''
+      userInfo: {
+        userPhoneNumber: null,
+        avatar: 'https://d.lanrentuku.com/down/png/1712/22xiaodongwu/22xiaodongwu_12.png'
+      }
+      // encrypted: ''
       // userHeader:[]
     };
   },
@@ -39,53 +41,24 @@ export default {
     goback() {
       this.$router.go(-1);
     },
-    sendPassword() {
-      let str = this.userPhoneNumber;
-      if (str.charAt(0) == 1 && str.length === 11) {
-        var encryptor = new JSEncrypt(); //新建JSEncrypt对象
-        //设置公钥
-        encryptor.setPublicKey(
-          `-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCLSytDwFEOR8zZT96EGpsgC6Nxvx4Lm55dI8umjjP21rUZUdn9ALdAEyNXxF6bA5NGJAwPNE95PqZjRQfFyfof/JwucojipzQZldRG+dXV/qdyqiGVp8CTRBZGo1Meaij51kcWXUcmLtbGgU0/ga5ELdEQKVU/DSFY805ZYBbshQIDAQAB-----END PUBLIC KEY-----`
-        );
-        //数据加密
-        this.encrypted = encryptor.encrypt(this.userPhoneNumber);
-        console.log(this.encrypted, '被加密的电话');
-        sendPasswordApi({
-          mobile: this.encrypted,
-          sms_type: 1,
-          decrypt_type: 1
-        }).then(res => {
-          console.log(res, '验证码发送成功');
-        });
-      } else {
-        alert('格式不正确');
-      }
-    },
+
     userLogin() {
-      userLoginApi({
-        mobile: this.encrypted,
-        operate_type: 3,
-        sms_code: this.userPassword,
-        decrypt_type: 1
-        // invite_code: 6ad2e935b5b34e069409eaeb33fd8018,
-      }).then(res => {
-        this.userInfo = res.result;
-        console.log(res, '登录成功');
+      if (this.userInfo.userPhoneNumber.length > 2 && this.userPassword.length >= 6) {
+        // if (this.userInfo.userPhoneNumber != null && this.userPassword != null) {
+        console.log(this.userInfo);
         this.$store.commit('setUserData', this.userInfo);
         this.$store.commit('setDeviceId', localStorage.getItem('device_id'));
         localStorage.setItem('user_date', JSON.stringify(this.userInfo));
-
-        getUserDateApi({
-          user_id: this.userInfo.user_id,
-          user_token: this.userInfo.user_token
-        }).then(res => {
-          // this.userHeader=res.result
-          console.log(res, '用户信息获取成功');
-          this.$router.push('/').catch(err => {
-            err;
-          });
+        console.log(this.userInfo, '登录成功');
+        this.$router.push('/').catch(err => {
+          err;
         });
-      });
+        // } else {
+        //   alert('账号密码不能为空');
+        // }
+      } else {
+        alert('账号最少字符长度为2，密码至少为6位');
+      }
     }
   }
 };

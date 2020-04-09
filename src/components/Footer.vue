@@ -25,13 +25,13 @@
       <div class="more">
         <div class="login" v-if="$store.getters.getLoginState==false" @click="curChange(1,'/login')">登陆/注册</div>
         <div class="user" v-if="$store.getters.getLoginState==true">
-          <div class="left" @click="exitBtn()">
+          <div class="left">
             <img :src="$store.getters.getUserData.avatar" alt="">
             <!-- <h1>{{$store.getters.getUserData}}h1</h1> -->
-            <p>{{$store.getters.getUserData.nick_name }}</p>
+            <p>{{$store.getters.getUserData.userPhoneNumber }}</p>
             <div class="level" style="background-image: url('https://h5.wuyouxinyong.com/kzds_resource/kzds/img/ff50c79.png');"></div>
           </div>
-          <div class="right" @click="exitBtn()">退出登录</div>
+          <div class="right" @click.prevent="exitBtn()">退出登录</div>
         </div>
         <div class="menu">
           <MenuListVue></MenuListVue>
@@ -78,6 +78,8 @@ export default {
     },
     exitBtn() {
       localStorage.removeItem('user_date');
+      // this.$store.getters.getLoginState=false
+      this.$store.commit('setLoginState', false);
     }
   }
 };

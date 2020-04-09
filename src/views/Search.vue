@@ -3,12 +3,10 @@
     <!-- 搜索框 -->
     <section class="search">
       <div class="left">
-        <input v-model="iptTxt" ref="iptVal" class="ipt" type="search" placeholder="口子大神">
+        <input v-model="iptTxt" ref="iptVal" class="ipt" type="search" @keyup.enter='submit()' placeholder="口子大神">
       </div>
-      <div class="right" @click="submit()">搜索</div>
       <div class="right" @click="backPage()">取消</div>
     </section>
-
   </div>
 </template>
 <script>
@@ -48,7 +46,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   .left {
-    width: 70%;
+    width: 90%;
     .ipt {
       width: 100%;
       height: 32px;
@@ -65,6 +63,7 @@ export default {
   .right {
     font-size: 15px;
     color: #555;
+    margin-right: 15px;
   }
 }
 </style>

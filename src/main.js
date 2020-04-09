@@ -2,7 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import axios from './request/http';
+// import axios from './request/http';
 import VueLazyload from "vue-lazyload"
 import preview from 'vue-photo-preview'//图片预览
 import 'vue-photo-preview/dist/skin.css'
@@ -14,7 +14,7 @@ Vue.use(Vant)
 // import { Swipe, SwipeItem } from 'vant'
 // Vue.use(Swipe);
 // Vue.use(SwipeItem);
-Vue.prototype.$axios = axios
+// Vue.prototype.$axios = axios
 
 Vue.config.productionTip = false;
 

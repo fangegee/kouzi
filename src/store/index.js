@@ -44,6 +44,9 @@ export default new Vuex.Store({
     },
     setIptText(state, ipt) {
       state.iptText = ipt
+    },
+    setLoginState(state, status) {
+      state.loginState = status
     }
   },
   actions: {},

@@ -160,14 +160,14 @@ export default {
 </script>
 <style lang="scss" scoped>
 .box {
-  background-color: #f4f4f4;
+  background-color: #fff;
 }
 .search {
+  margin: 20px 0 12px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 16px;
-  margin-bottom: 12px;
   .left {
     width: 100%;
     .ipt {
@@ -188,8 +188,10 @@ export default {
   .nav {
     display: flex;
     justify-content: center;
-    box-shadow: 0 1px 14px rgba(0, 8, 26, 0.1);
+    box-shadow: 0 5px 14px -5px rgba(0, 8, 26, 0.1);
+    padding: 0 16px;
     div {
+      height: 22px;
       padding: 2px 0 10px;
       width: 25%;
       font-size: 13px;
